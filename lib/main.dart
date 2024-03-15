@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Chlorine Level Monitor',
+      title: 'Chlorine Level  jjhhgkg Monitor',
       theme: ThemeData(
         primarySwatch: Colors.teal,
         hintColor: Colors.tealAccent,

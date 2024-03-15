@@ -110,7 +110,7 @@ class _RatePageState extends State<RatePage> {
                 onPressed: _isSubmitting ? null : _submitRating,
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Color.fromARGB(255, 180, 230, 131),
                 ),
                 child: _isSubmitting
                     ? CircularProgressIndicator(

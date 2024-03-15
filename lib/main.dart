@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:async' show Timer;
 import 'dart:math';
-
-// Import other pages
 import 'feedback.dart';
 import 'rate.dart';
 import 'contact.dart';
 import 'graph.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   static ThemeMode themeMode = ThemeMode.system;
+
+  const MyApp({super.key});
 
   static void updateThemeMode(ThemeMode mode) {
     themeMode = mode;
@@ -30,44 +30,44 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Chlorine Level Monitor',
-      theme: ThemeData.light().copyWith(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.lightBlueAccent,
-        ),
-        scaffoldBackgroundColor: Colors.lightBlue[50],
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        hintColor: Colors.tealAccent,
         textTheme: const TextTheme(
           bodyText1: TextStyle(
             color: Colors.black87,
+            fontSize: 16.0,
           ),
           bodyText2: TextStyle(
             color: Colors.black87,
+            fontSize: 14.0,
           ),
           headline6: TextStyle(
-            color: Colors.black,
+            color: Colors.teal,
             fontFamily: 'Roboto',
+            fontSize: 20.0,
           ),
         ),
       ),
       darkTheme: ThemeData.dark().copyWith(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.lightBlueAccent,
-          brightness: Brightness.dark,
-        ),
-        scaffoldBackgroundColor: Colors.grey[900],
+        brightness: Brightness.dark,
         textTheme: const TextTheme(
           bodyText1: TextStyle(
-            color: Colors.white70, // Adjusted to a lighter shade of white
+            color: Colors.white70,
+            fontSize: 16.0,
           ),
           bodyText2: TextStyle(
-            color: Colors.white70, // Adjusted to a lighter shade of white
+            color: Colors.white70,
+            fontSize: 14.0,
           ),
           headline6: TextStyle(
-            color: Colors.white,
+            color: Colors.tealAccent,
             fontFamily: 'Roboto',
+            fontSize: 20.0,
           ),
         ),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal)
+            .copyWith(secondary: Colors.tealAccent),
       ),
       themeMode: MyApp.currentThemeMode,
       initialRoute: '/',
@@ -78,6 +78,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// ... rest of the code for ChlorineLevelScreen ...
 
 class ChlorineLevelScreen extends StatefulWidget {
   @override
@@ -192,15 +194,16 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Theme.of(context).colorScheme.background,
-                Theme.of(context).colorScheme.surface,
+                // Slightly darken the background color for the drawer
+                Theme.of(context).colorScheme.background.withOpacity(0.9),
+                Theme.of(context).colorScheme.surface.withOpacity(0.9),
               ],
             ),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 decoration: BoxDecoration(
                   color: Colors.transparent,
                 ),
@@ -213,7 +216,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                 ),
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Give Feedback',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -229,7 +232,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                 },
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Rate Us',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -245,7 +248,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                 },
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Contact Us',
                   style: TextStyle(color: Colors.white),
                 ),
@@ -262,29 +265,6 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
               ),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            isDarkMode = !isDarkMode;
-            // Toggle between light and dark themes
-            ThemeMode currentMode =
-                isDarkMode ? ThemeMode.dark : ThemeMode.light;
-            MyApp.updateThemeMode(currentMode);
-            if (currentMode == ThemeMode.light) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Switching to Light Theme')),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Switching to Dark Theme')),
-              );
-            }
-          });
-        },
-        child: Icon(
-          isDarkMode ? Icons.light_mode : Icons.dark_mode,
         ),
       ),
     );

@@ -88,7 +88,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
     with SingleTickerProviderStateMixin {
   bool isDarkMode = false;
 
-   late double _phValue;
+  late double _phValue;
   final DatabaseReference _phDataRef = FirebaseDatabase.instance
       .reference()
       .child('ph_data')
@@ -112,13 +112,11 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
     });
   }
 
-    
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chlorine Monitor'),
+        title: Text('Chlorine Monitor System'),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Container(
@@ -156,7 +154,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                         'Live Chlorine Level:',
                         style: Theme.of(context).textTheme.headline6,
                       ),
-                      const SizedBox(height:30),
+                      const SizedBox(height: 30),
                       Text(
                         'pH Value: $_phValue',
                         style: TextStyle(
@@ -183,31 +181,31 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Theme.of(context).colorScheme.primary,
-                        Theme.of(context).colorScheme.secondary,
-                      ],
-                    ),
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Theme.of(context).colorScheme.primary,
+                Theme.of(context).colorScheme.secondary,
+              ],
+            ),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-               Padding(
-                 padding: const EdgeInsets.only(top:100,left:50,bottom: 20),
-                 child: Text(
-                    'User Feedback',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
+              Padding(
+                padding: const EdgeInsets.only(top: 100, left: 50, bottom: 20),
+                child: Text(
+                  'User Feedback',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
                   ),
-               ),
-               Padding(
-                 padding: const EdgeInsets.only(bottom: 20),
-                 child: Icon(Icons.person,size:80),
-               ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Icon(Icons.person, size: 80),
+              ),
               ListTile(
                 title: const Text(
                   'Give Feedback',
@@ -262,6 +260,4 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
       ),
     );
   }
-
-
 }

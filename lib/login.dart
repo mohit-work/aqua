@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'signup.dart';
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -22,6 +24,12 @@ class _LoginPageState extends State<LoginPage> {
     if (_formKey.currentState!.validate()) {
       // Perform login
       print('Login successful');
+
+      // Navigate to HomePage after successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomiePage()),
+      );
     }
   }
 
@@ -53,10 +61,10 @@ class _LoginPageState extends State<LoginPage> {
                 ],
                 color: Color.fromARGB(255, 38, 37, 37),
                 borderRadius: BorderRadius.circular(30),
-                border: Border.all(width: 1), // Add border to the container
+                border: Border.all(width: 1),
               ),
               child: SizedBox(
-                height: 400, // Set a fixed height for the Container
+                height: 400,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Form(
@@ -72,13 +80,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16),
                         TextFormField(
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 244, 249, 249)),
+                          style: TextStyle(color: Color.fromARGB(255, 244, 249, 249)),
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
-                            labelText: ' Email Address',
+                            labelText: 'Email Address',
                             hintText: 'e.g., example@domain.com',
                             border: OutlineInputBorder(),
                           ),
@@ -91,14 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 241, 247, 247)),
+                          style: TextStyle(color: Color.fromARGB(255, 241, 247, 247)),
                           controller: _passController,
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
                           decoration: const InputDecoration(
-                            labelText: ' Password',
+                            labelText: 'Password',
                             hintText: 'Enter your password',
                             border: OutlineInputBorder(),
                           ),
@@ -116,31 +122,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16.0),
                         TextButton(
-                          onPressed: () async {
-                            try {
-                              final userCredential = await FirebaseAuth.instance
-                                  .signInWithEmailAndPassword(
-                                email: _emailController.text.trim(),
-                                password: _passController.text.trim(),
-                              );
-                              print(userCredential);
-                            } on FirebaseAuthException catch (e) {
-                              String message =
-                                  'An error occurred during login.';
-                              switch (e.code) {
-                                case 'invalid-credential':
-                                  message = 'Invalid email or password.';
-                                  break;
-                                default:
-                                  message = 'An unexpected error occurred.';
-                              }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(message),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            }
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => SignupPage()),
+                            );
                           },
                           child: Text('Don\'t have an account? Sign up'),
                         ),
@@ -160,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

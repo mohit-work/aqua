@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1085939915040',
     projectId: 'first-proj-24d5d',
     authDomain: 'first-proj-24d5d.firebaseapp.com',
+    databaseURL: 'https://first-proj-24d5d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'first-proj-24d5d.appspot.com',
     measurementId: 'G-JDBWJEPK0M',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:1085939915040:android:1a0ecbee8e62344a39df45',
     messagingSenderId: '1085939915040',
     projectId: 'first-proj-24d5d',
+    databaseURL: 'https://first-proj-24d5d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'first-proj-24d5d.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:1085939915040:ios:6b63c6839fc0698e39df45',
     messagingSenderId: '1085939915040',
     projectId: 'first-proj-24d5d',
+    databaseURL: 'https://first-proj-24d5d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'first-proj-24d5d.appspot.com',
     iosBundleId: 'com.example.flutterHackathon1',
   );
@@ -75,6 +78,7 @@ class DefaultFirebaseOptions {
     appId: '1:1085939915040:ios:2f01891fac72c7f839df45',
     messagingSenderId: '1085939915040',
     projectId: 'first-proj-24d5d',
+    databaseURL: 'https://first-proj-24d5d-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'first-proj-24d5d.appspot.com',
     iosBundleId: 'com.example.flutterHackathon1.RunnerTests',
   );

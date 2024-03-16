@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hackathon1/contact.dart';
 import 'package:flutter_hackathon1/feedback.dart';
@@ -85,39 +86,33 @@ class ChlorineLevelScreen extends StatefulWidget {
 
 class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
     with SingleTickerProviderStateMixin {
-  late double _chlorineLevel;
-  late AnimationController _animationController;
-  late Animation<double> _fadeInAnimation;
-  late Timer _timer;
   bool isDarkMode = false;
+
+   late double _phValue;
+  final DatabaseReference _phDataRef = FirebaseDatabase.instance
+      .reference()
+      .child('ph_data')
+      .child('latest')
+      .child('pH');
 
   @override
   void initState() {
     super.initState();
-
-    _chlorineLevel = 0.0;
-
-    // Start generating random data every second
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        // Generate random chlorine level between 0 and 10
-        _chlorineLevel = Random().nextDouble() * 10;
-        if (_chlorineLevel > 10) {
-          _chlorineLevel = 10; // Limit to maximum value of 10
-        }
-      });
+    _phValue = 0.0; // Initialize pH value
+    _phDataRef.onValue.listen((event) {
+      if (event.snapshot.value != null) {
+        setState(() {
+          _phValue = double.parse(event.snapshot.value.toString());
+        });
+      } else {
+        print('Snapshot value is null');
+      }
+    }, onError: (error) {
+      print('Error fetching pH value: $error');
     });
-
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    _fadeInAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeIn,
-      ),
-    );
-    _animationController.forward();
   }
+
+    
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +125,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
         color: Theme.of(context).scaffoldBackgroundColor,
         child: Center(
           child: FadeTransition(
-            opacity: _fadeInAnimation,
+            opacity: kAlwaysCompleteAnimation,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -163,7 +158,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                       ),
                       const SizedBox(height:30),
                       Text(
-                        _chlorineLevel.toStringAsFixed(2),
+                        'pH Value: $_phValue',
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
@@ -268,10 +263,5 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
     );
   }
 
-  @override
-  void dispose() {
-    _timer.cancel();
-    _animationController.dispose();
-    super.dispose();
-  }
+
 }

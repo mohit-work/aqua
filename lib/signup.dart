@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'home.dart';
+
 class SignupPage extends StatefulWidget {
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -106,12 +107,11 @@ class _SignupPageState extends State<SignupPage> {
                        onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       try {
-                        final userCredential = await FirebaseAuth.instance
+                        await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                           email: _emailController.text,
                           password: _passwordController.text,
                         );
-                        print(userCredential);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Registration successful!'),

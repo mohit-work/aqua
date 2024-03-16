@@ -21,7 +21,8 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 41, 37, 37),
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 93, 92, 92),toolbarHeight: 10,),
+    backgroundColor: Color.fromARGB(255, 5, 5, 5),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 170.0,

@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    
-    backgroundColor: Color.fromARGB(255, 61, 199, 199),
+    appBar: AppBar(backgroundColor: Color.fromARGB(255, 40, 39, 39),),
+    backgroundColor: Color.fromARGB(255, 5, 5, 5),
     body: Padding(
       padding: const EdgeInsets.only(top:170.0,left:20,right:20,),
       child: Container(
@@ -34,7 +34,7 @@ Widget build(BuildContext context) {
                       offset: Offset(0, 3),
                     ),
                   ],
-          color: Colors.black,
+          color: Color.fromARGB(255, 36, 33, 33),
           borderRadius: BorderRadius.circular(30),
           border: Border.all(width: 1), // Add border to the container
         ),

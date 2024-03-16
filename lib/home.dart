@@ -7,22 +7,22 @@ import 'package:flutter_hackathon1/feedback.dart';
 import 'package:flutter_hackathon1/graph.dart';
 import 'package:flutter_hackathon1/rate.dart';
 
-class HomePage extends StatefulWidget {
+class HomiePage extends StatefulWidget {
   static ThemeMode themeMode = ThemeMode.system;
 
-  const HomePage({super.key});
+  const HomiePage({super.key});
 
   static void updateThemeMode(ThemeMode mode) {
     themeMode = mode;
   }
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomiePageState createState() => _HomiePageState();
 
   static ThemeMode get currentThemeMode => themeMode;
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomiePageState extends State<HomiePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.teal)
             .copyWith(secondary: Colors.tealAccent),
       ),
-      themeMode: HomePage.currentThemeMode,
+      themeMode: HomiePage.currentThemeMode,
       initialRoute: '/',
       routes: {
         '/': (context) => ChlorineLevelScreen(),

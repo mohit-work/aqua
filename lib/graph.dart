@@ -85,7 +85,7 @@ class _GraphScreenState extends State<GraphScreen> {
                           LineChartBarData(
                             spots: _groupData(_chlorineLevels),
                             isCurved: true,
-                            colors: [Colors.lightBlue],
+                            color: Colors.lightBlue,
                             barWidth: 2,
                             isStrokeCapRound: true,
                             dotData: FlDotData(show: false),

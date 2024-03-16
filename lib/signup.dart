@@ -1,6 +1,8 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'home.dart';
 class SignupPage extends StatefulWidget {
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -10,6 +12,12 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _login() {
     if (_formKey.currentState!.validate()) {
@@ -21,8 +29,11 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color.fromARGB(255, 93, 92, 92),toolbarHeight: 10,),
-    backgroundColor: Color.fromARGB(255, 5, 5, 5),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 93, 92, 92),
+        toolbarHeight: 10,
+      ),
+      backgroundColor: Color.fromARGB(255, 5, 5, 5),
       body: Padding(
         padding: const EdgeInsets.only(
           top: 170.0,
@@ -64,46 +75,77 @@ class _SignupPageState extends State<SignupPage> {
                       style: TextStyle(color: Color.fromARGB(255, 11, 11, 11)),
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(labelText: 'Email'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        return null;
-                      },
+                      textInputAction: TextInputAction.next,
+                      validator: (value) => EmailValidator.validate(value!)
+                          ? null
+                          : 'Please enter a valid email address.',
+                      decoration: const InputDecoration(
+                        labelText: 'Email Address',
+                        hintText: 'e.g., example@domain.com',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                     SizedBox(height: 16.0),
                     TextFormField(
-                      style: TextStyle(color: Color.fromARGB(255, 15, 15, 15)),
                       controller: _passwordController,
-                      obscureText: true,
-                      decoration: InputDecoration(labelText: 'Password'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
+                    border: OutlineInputBorder(),
+                  ),
                     ),
-                    SizedBox(height: 16.0),
+                   SizedBox(height: 16.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors
                             .black, // Set the background color of the button
                       ),
-                      onPressed: _login,
+                       onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        final userCredential = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        print(userCredential);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Registration successful!'),
+                          ),
+                          
+                        );
+                        Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          HomiePage(), // Navigate to the RatePage
+                    ),
+                  );
+                        
+                      } on FirebaseAuthException catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(e.message!),
+                          ),
+                        );
+                      }
+                    }
+                  },
                       child: Text('SIGNUP'),
                     ),
                     SizedBox(height: 16.0),
                     TextButton(
                       onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          LoginPage(), 
-                    ),
-                  ); 
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        );
                       },
                       child: Text(
                           'Already have an account? Login'), // Change the text here if needed

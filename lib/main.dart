@@ -191,30 +191,31 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                // Slightly darken the background color for the drawer
-                Theme.of(context).colorScheme.background.withOpacity(0.9),
-                Theme.of(context).colorScheme.surface.withOpacity(0.9),
-              ],
-            ),
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Theme.of(context).colorScheme.primary,
+                        Theme.of(context).colorScheme.secondary,
+                      ],
+                    ),
           ),
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
-                child: Text(
-                  'User Feedback',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
+               Padding(
+                 padding: const EdgeInsets.only(top:100,left:50,bottom: 20),
+                 child: Text(
+                    'User Feedback',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
                   ),
-                ),
-              ),
+               ),
+               Padding(
+                 padding: const EdgeInsets.only(bottom: 20),
+                 child: Icon(Icons.person,size:80),
+               ),
               ListTile(
                 title: const Text(
                   'Give Feedback',

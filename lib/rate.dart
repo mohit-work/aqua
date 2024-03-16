@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RatePage extends StatefulWidget {
+  const RatePage({Key? key}) : super(key: key);
+
   @override
   _RatePageState createState() => _RatePageState();
 }
@@ -9,123 +11,128 @@ class _RatePageState extends State<RatePage> {
   double _rating = 0.0;
   bool _isSubmitting = false;
 
+  Color getButtonColor(double rating) {
+    if(rating==0){
+      return Colors.blue;
+    }
+    else{
+      if(rating<2){
+        return Colors.red;
+      }
+      else if(rating<4){
+        return Colors.yellow;
+      }
+      else if(rating<5){
+        return Colors.green;
+      }
+      else {
+        return Colors.blue;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor;
-    if (_rating >= 4) {
-      backgroundColor = Colors.green.shade50;
-    } else if (_rating >= 2) {
-      backgroundColor = Colors.amber.shade50;
-    } else {
-      backgroundColor = Colors.red.shade50;
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Rate Us'),
         backgroundColor: Colors.blue,
+        title: const Text('Rate Us'),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              backgroundColor.withOpacity(0.5),
-              backgroundColor.withOpacity(0.8),
-            ],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'How would you rate your experience?',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 200,top:200,left: 20,right: 20),
+        child: Container(
+          decoration: BoxDecoration(
+                    color: Color.fromARGB(71, 5, 5, 5),
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 20),
-                    Expanded(
-                      child: Center(
-                        child: AnimatedSwitcher(
-                          duration: Duration(milliseconds: 500),
-                          child: _rating == 0
-                              ? Text(
-                                  'Please rate us!',
-                                  key: ValueKey('rate_text'),
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
+                    ],
+                  ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  'Rate your Experience',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white, // Light text color
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                Container(
+                  
+                  child: Center(
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      child: _rating == 0
+                          ? Icon(Icons.roller_skating_rounded,size: 64,)
+                            : _rating==5 ?
+                            Icon(
+                                  Icons.sentiment_very_satisfied_rounded,
+                                  size: 64,
+                                  color: Colors.blue,
                                 )
-                              : _rating >= 4
+                          : _rating >= 4
+                              ? Icon(
+                                  Icons.sentiment_satisfied_rounded,
+                                  size: 64,
+                                  color: Colors.green,
+                                )
+                              : _rating >= 2
                                   ? Icon(
-                                      Icons.sentiment_satisfied_rounded,
+                                      Icons.sentiment_neutral_rounded,
                                       size: 64,
-                                      color: Colors.green,
+                                      color: Colors.amber,
                                     )
-                                  : _rating >= 2
-                                      ? Icon(
-                                          Icons.sentiment_neutral_rounded,
-                                          size: 64,
-                                          color: Colors.amber,
-                                        )
-                                      : Icon(
-                                          Icons.sentiment_dissatisfied_rounded,
-                                          size: 64,
-                                          color: Colors.red,
-                                        ),
+                                  : Icon(
+                                      Icons.sentiment_dissatisfied_rounded,
+                                      size: 64,
+                                      color: Colors.red,
+                                    ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Slider(
+                  value: _rating,
+                  min: 0,
+                  max: 5,
+                  divisions: 10,
+                  label: _rating.toString(),
+                  onChanged: (value) {
+                    setState(() {
+                      _rating = value;
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: _isSubmitting ? null : _submitRating,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: getButtonColor(_rating),
+                  ),
+                  child: _isSubmitting
+                      ? const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : const Text(
+                          'Submit Rating',
+                          style: TextStyle(fontSize: 18, color: Color.fromARGB(255, 221, 216, 202)),
                         ),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Slider(
-                      value: _rating,
-                      min: 0,
-                      max: 5,
-                      divisions: 10,
-                      label: _rating.toString(),
-                      onChanged: (value) {
-                        setState(() {
-                          _rating = value;
-                        });
-                      },
-                    ),
-                  ],
                 ),
-              ),
-              ElevatedButton(
-                onPressed: _isSubmitting ? null : _submitRating,
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Color.fromARGB(255, 180, 230, 131),
-                ),
-                child: _isSubmitting
-                    ? CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      )
-                    : Text(
-                        'Submit Rating',
-                        style: TextStyle(fontSize: 18),
-                      ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
       ),
-    );
+      );
   }
 
   void _submitRating() {
@@ -134,7 +141,7 @@ class _RatePageState extends State<RatePage> {
     });
 
     // Simulate rating submission with a delay
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       print('User rated: $_rating');
 
       setState(() {
@@ -146,15 +153,15 @@ class _RatePageState extends State<RatePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Rating Submitted'),
-            content: Text('Thank you for your feedback!'),
+            title: const Text('Rating Submitted'),
+            content: const Text('Thank you for your feedback!'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               ),
             ],
           );

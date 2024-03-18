@@ -80,7 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16),
                         TextFormField(
-                          style: TextStyle(color: Color.fromARGB(255, 244, 249, 249)),
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 244, 249, 249)),
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
@@ -98,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
-                          style: TextStyle(color: Color.fromARGB(255, 241, 247, 247)),
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 241, 247, 247)),
                           controller: _passController,
                           obscureText: true,
                           enableSuggestions: false,
@@ -125,7 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => SignupPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => SignupPage()),
                             );
                           },
                           child: Text('Don\'t have an account? Sign up'),
@@ -150,9 +153,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
-    properties.add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
-    properties.add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
-    properties.add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
+    properties
+        .add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
+    properties
+        .add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
+    properties
+        .add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
+    properties
+        .add(DiagnosticsProperty<GlobalKey<FormState>>('_formKey', _formKey));
   }
 }

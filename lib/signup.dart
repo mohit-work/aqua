@@ -89,52 +89,50 @@ class _SignupPageState extends State<SignupPage> {
                     SizedBox(height: 16.0),
                     TextFormField(
                       controller: _passwordController,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Enter your password',
-                    border: OutlineInputBorder(),
-                  ),
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                        labelText: 'Password',
+                        hintText: 'Enter your password',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
-                   SizedBox(height: 16.0),
+                    SizedBox(height: 16.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors
                             .black, // Set the background color of the button
                       ),
-                       onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      try {
-                        await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Registration successful!'),
-                          ),
-                          
-                        );
-                        Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          HomiePage(), // Navigate to the RatePage
-                    ),
-                  );
-                        
-                      } on FirebaseAuthException catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(e.message!),
-                          ),
-                        );
-                      }
-                    }
-                  },
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            await FirebaseAuth.instance
+                                .createUserWithEmailAndPassword(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Registration successful!'),
+                              ),
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomiePage(), // Navigate to the RatePage
+                              ),
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(e.message!),
+                              ),
+                            );
+                          }
+                        }
+                      },
                       child: Text('SIGNUP'),
                     ),
                     SizedBox(height: 16.0),

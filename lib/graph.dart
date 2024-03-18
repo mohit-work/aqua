@@ -47,12 +47,11 @@ class _GraphScreenState extends State<GraphScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 7, 7, 7),
         title:
             Text('Chlorine Level Graph', style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
       ),
       body: Column(
-
         children: [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.0),

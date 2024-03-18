@@ -1,5 +1,3 @@
-import 'dart:async';
-import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hackathon1/contact.dart';
@@ -115,7 +113,7 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chlorine Monitor System'),
+        title: Text('Chlorine Monitor'),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: Container(
@@ -167,6 +165,16 @@ class _ChlorineLevelScreenState extends State<ChlorineLevelScreen>
                           Navigator.pushNamed(context, '/graph');
                         },
                         child: Text('View Graph'),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        ' (7.2) - (7.6): Perfect down to the last minute Atom\n(5) - (7.2) or (7.6) - (10): Itty bitty issue\n(< 5) or (> 10): I am the Danger',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
